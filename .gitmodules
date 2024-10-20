@@ -1,0 +1,3 @@
+[submodule "board_files/vivado-boards"]
+	path = board_files/vivado-boards
+	url = git@github.com:Digilent/vivado-boards.git
