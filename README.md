@@ -32,12 +32,20 @@ To verify if the board files were installed correctly, open the Vivado TCL conso
 get_board_parts *arty-z7-20*
 ```
 
-## Todo
-- Remove unused synth runs
-- Disable unused source files
-- Set hw_cnn_lib as library
-- Adjust build.tcl script to correct board files
-- Integrate the library into the build script to ensure it is included as a library
+## Building the Project
+To create the Vivado project from this repository, follow these steps:
+
+1. Open Vivado.
+2. Go to **Tools** and select **Run Tcl Script**.
+3. Navigate to the repository directory and open the `build.tcl` file located in the root folder.
+   
+   Once the `build.tcl` script is executed, it will create a new directory called `OPEN-HW-CNN`. Inside this directory, Vivado will build the actual project using the VHDL files found under the `src` directory.
+
+## Updates
+- The library is now fully integrated into the `build.tcl` script. When the script is executed, the project will be created, and the library will be included as a library.
+- Unnecessary synthesis runs have been removed.
+- Unused source files have not been disabled yet, but this is not a priority at the moment.
+- The `build.tcl` script has been adjusted to use the correct version of the board files.
 
 ## Vivado Version
 This project is built with:
