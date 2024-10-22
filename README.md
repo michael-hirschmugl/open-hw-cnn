@@ -41,6 +41,24 @@ To create the Vivado project from this repository, follow these steps:
    
    Once the `build.tcl` script is executed, it will create a new directory called `OPEN-HW-CNN`. Inside this directory, Vivado will build the actual project using the VHDL files found under the `src` directory.
 
+## Creating an IP Core
+
+To create an IP core that can be imported into another project, follow these steps:
+
+1. Run the `package_ip.tcl` script located in the root folder of the repository.
+This script will generate an IP core based on the settings defined in the `config.tcl` file. The IP core will be saved in the `ip_output` directory.
+
+## Configuration
+
+The `config.tcl` file allows you to configure both the project and the IP core. You can modify:
+
+- The project name (used when creating the project directory).
+- The IP core name and other metadata, such as vendor, library, version, display name, description, etc.
+
+## Running Both Build and Packaging
+
+You can easily run both the build and package processes in sequence by using the `run_build_and_package.bat` file. This batch file will first execute the `build.tcl` script to build the project, and then the `package_ip.tcl` script to generate the IP core.
+
 ## Updates
 - The library is now fully integrated into the `build.tcl` script. When the script is executed, the project will be created, and the library will be included as a library.
 - Unnecessary synthesis runs have been removed.
