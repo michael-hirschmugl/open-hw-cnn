@@ -1,4 +1,26 @@
-# Determine the directory where the script is being executed (the directory where package_ip.tcl is located)
+# Load the configuration file (assumed to be in the same directory as the script)
+set config_file [file join [file dirname [info script]] "config.tcl"]
+if {[file exists $config_file]} {
+    source $config_file
+} else {
+    puts "Error: Configuration file not found: $config_file"
+    exit 1
+}
+
+# Output the loaded configuration values for debugging
+puts "Loaded configuration:"
+puts "Project name: $project_name"
+puts "IP name: $ip_name"
+puts "Vendor: $vendor"
+puts "Library: $library"
+puts "Name: $name"
+puts "Version: $version"
+puts "Display Name: $display_name"
+puts "Description: $description"
+puts "Vendor Display Name: $vendor_display_name"
+puts "Company URL: $company_url"
+
+# Determine the directory where the script is being executed
 set current_dir [file dirname [info script]]
 puts "Script directory: $current_dir"
 
@@ -8,11 +30,11 @@ puts "Creating tmp directory: $tmp_dir"
 file mkdir $tmp_dir
 
 # Open the existing project and create the IP-Core project in the tmp directory
-open_project $current_dir/OPEN-HW-CNN/OPEN-HW-CNN.xpr
+open_project "$current_dir/$project_name/$project_name.xpr"
 
 # Package IP in the "tmp" directory
 puts "Creating IP in tmp directory: $tmp_dir"
-ipx::package_project -root_dir $tmp_dir -vendor xilinx.com -library user -taxonomy /UserIP -import_files -set_current false
+ipx::package_project -root_dir $tmp_dir -vendor $vendor -library $library -taxonomy /UserIP -import_files -set_current false
 
 # Check if files exist in the tmp directory
 puts "Contents of tmp directory:"
@@ -28,16 +50,16 @@ ipx::unload_core $tmp_dir/component.xml
 puts "Editing IP in temporary project"
 ipx::edit_ip_in_project -upgrade true -name tmp_edit_project -directory $tmp_dir $tmp_dir/component.xml
 
-# Set the IP identification parameters
+# Set the IP identification parameters from the configuration file
 puts "Setting IP parameters"
-set_property vendor "xilinx.com" [ipx::current_core]
-set_property library "user" [ipx::current_core]
-set_property name "seq_cnn_hw_acc" [ipx::current_core]
-set_property version "1.0" [ipx::current_core]
-set_property display_name "seq_cnn_hw_acc_v1_0" [ipx::current_core]
-set_property description "seq_cnn_hw_acc_v1_0" [ipx::current_core]
-set_property vendor_display_name "" [ipx::current_core]
-set_property company_url "" [ipx::current_core]
+set_property vendor $vendor [ipx::current_core]
+set_property library $library [ipx::current_core]
+set_property name $name [ipx::current_core]
+set_property version $version [ipx::current_core]
+set_property display_name $display_name [ipx::current_core]
+set_property description $description [ipx::current_core]
+set_property vendor_display_name $vendor_display_name [ipx::current_core]
+set_property company_url $company_url [ipx::current_core]
 
 # Save the IP
 puts "Saving IP"
@@ -48,7 +70,7 @@ puts "Closing project"
 close_project
 
 # Create the directory for the IP in "ip_output" and name it after the IP
-set ip_output_dir "$current_dir/ip_output/seq_cnn_hw_acc"
+set ip_output_dir "$current_dir/ip_output/$ip_name"
 puts "Creating ip_output directory: $ip_output_dir"
 file mkdir -p $ip_output_dir
 

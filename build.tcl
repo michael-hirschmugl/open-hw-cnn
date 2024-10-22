@@ -163,6 +163,19 @@ proc checkRequiredFiles { origin_dir} {
 #
 #  return $status
 #}
+
+# Load the configuration file (assumed to be in the same directory as the script)
+set config_file [file join [file dirname [info script]] "config.tcl"]
+if {[file exists $config_file]} {
+    source $config_file
+} else {
+    puts "Error: Configuration file not found: $config_file"
+    exit 1
+}
+
+# Output the loaded project name for debugging
+puts "Loaded project name: $project_name"
+
 # Set the reference directory for source file relative paths (by default the value is script directory path)
 set origin_dir [file dirname [info script]]
 
@@ -172,7 +185,7 @@ if { [info exists ::origin_dir_loc] } {
 }
 
 # Set the project name
-set _xil_proj_name_ "OPEN-HW-CNN"
+set _xil_proj_name_ $project_name
 
 # Use project name variable, if specified in the tcl shell
 if { [info exists ::user_project_name] } {
@@ -242,7 +255,7 @@ if { $validate_required } {
 }
 
 # Create project
-create_project OPEN-HW-CNN $origin_dir/OPEN-HW-CNN -part xc7z020clg400-1
+create_project $project_name $origin_dir/$project_name -part xc7z020clg400-1
 
 # Set the directory path for the new project
 set proj_dir [get_property directory [current_project]]

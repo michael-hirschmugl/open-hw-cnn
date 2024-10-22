@@ -1,1 +1,8 @@
-OPEN-HW-CNN/
+# Ignore all project directories that match the project name pattern
+/PROJ_*/
+
+# Ignore everything in the ip_output directory
+ip_output/*
+
+# But keep the .gitkeep file
+!ip_output/.gitkeep
