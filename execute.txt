@@ -1,0 +1,1 @@
+C:\Xilinx\Vivado\2024.1\bin\vivado.bat -mode batch -source C:\Users\michael\Documents\git\open-hw-cnn\ip_project.tcl
