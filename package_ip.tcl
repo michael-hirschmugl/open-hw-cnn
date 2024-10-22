@@ -72,7 +72,7 @@ close_project
 # Create the directory for the IP in "ip_output" and name it after the IP
 set ip_output_dir "$current_dir/ip_output/$ip_name"
 puts "Creating ip_output directory: $ip_output_dir"
-file mkdir -p $ip_output_dir
+file mkdir $ip_output_dir
 
 # Check if the ip_output directory was created
 if {[file exists $ip_output_dir]} {
